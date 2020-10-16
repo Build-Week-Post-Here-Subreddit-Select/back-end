@@ -12,8 +12,9 @@ exports.up = function(knex) {
       tbl.integer('user_id').unsigned().references('users.id').onDelete('RESTRICT').onUpdate('CASCADE')
       tbl.string('post_title', 256)
       tbl.text('post_text')
-      tbl.timestamp('post_created').defaultTo(knex.fn.now())
-      tbl.timestamp('post_updated').defaultTo(knex.fn.now())
+      tbl.dateTime('post_created').notNullable().defaultTo(knex.fn.now())
+      tbl.dateTime('post_updated').notNullable().defaultTo(knex.fn.now())
+      // tbl.timestamps([useTimestamps], [defaultToNow])
   })
   .createTable('predictions', tbl => {
       tbl.increments()
