@@ -11,9 +11,9 @@ function find() {
     return db("users-accounts").select("id", "username").orderBy("id")
 }
 
-async function add(){
+async function add(user){
     try {
-        const [id] = await db("users").insert(user, "id")
+        const [id] = await db("users-accounts").insert(user, "id")
         return findById(id)
     } catch (error) {
         throw error
@@ -21,7 +21,7 @@ async function add(){
 }
 
 function findBy(filter) {
-    return db("users-accounts").select("id", "username").orderBy("id")
+    return db("users-accounts").where(filter).select("id", "username", "password").first()
 }
 
 function findById(id) {

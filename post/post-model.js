@@ -2,6 +2,7 @@ const db = require("../data/dbConfig")
 
 module.exports = {
     getPosts,
+    getPostsList,
     addPosts,
     findById,
     update,
@@ -10,6 +11,10 @@ module.exports = {
 
 function getPosts() {
     return db("posts")
+}
+
+function getPostsList(user_id) {
+    return db('posts').where({user_id})
 }
 
 async function addPosts() {
