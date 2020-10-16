@@ -17,7 +17,7 @@ function getPostsList(user_id) {
     return db('posts').where({user_id})
 }
 
-async function addPosts() {
+async function addPosts(post) {
     try {
         const [id] = await db('posts').insert(post, 'id')
         return findById(id)

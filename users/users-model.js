@@ -8,7 +8,7 @@ module.exports = {
 }
 
 function find() {
-    return db("users-accounts").select("id", "username").orderBy("id")
+    return db("users-accounts").select("id", "username", "email", "name").orderBy("id")
 }
 
 async function add(user){
