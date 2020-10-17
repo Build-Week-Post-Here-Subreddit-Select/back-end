@@ -2,8 +2,9 @@ const router = require("express").Router()
 
 const Users = require("./users-model")
 const Posts = require("../post/post-model")
+const Restricted = require("../auth/restricted-middleware")
 
-router.get("/", (req, res) => {
+router.get("/", Restricted, (req, res) => {
     Users.find()
     .then(user => {
         res.status(200).json({message:"Success",user})
@@ -15,7 +16,7 @@ router.get("/", (req, res) => {
 
 //Get a list of user's post with thier ID
 
-router.get('/:id/posts/', (req, res) => {
+router.get('/:id/posts/', Restricted, (req, res) => {
     const {id} = req.params
     Posts.getPostsList(id)
     .then(postLists => {
@@ -28,7 +29,7 @@ router.get('/:id/posts/', (req, res) => {
 
 // Create a new post with a user
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', Restricted, (req, res) => {
     const newPost = req.body 
     Posts.addPosts(newPost)
     .then(postData => {
@@ -41,7 +42,7 @@ router.post('/:id/posts', (req, res) => {
 
 // Update a user's post
 
-router.put('/:id/posts/', (req, res) => {
+router.put('/:id/posts/', Restricted, (req, res) => {
     const {id} = req.params
     const changes = req.body
     Posts.getPostsList(id)
@@ -62,7 +63,7 @@ router.put('/:id/posts/', (req, res) => {
 
 // Delete a user's post 
 
-router.delete('/:id/posts/:id', (req, res) => {
+router.delete('/:id/posts/:id', Restricted, (req, res) => {
     const {id} = req.params 
     Posts.remove(id)
     .then(deleted => {

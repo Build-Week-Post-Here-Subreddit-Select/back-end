@@ -5,6 +5,8 @@ const router = require("express").Router()
 const Users = require("../users/users-model")
 const {isValid} = require("../users/users-service")
 
+const {jwtSecret} = require("../config/secrets")
+
 router.post("/register", async (req, res, next) => {
     const credentials = req.body
     console.log('USERS CREDENTIALS:',credentials)
@@ -13,7 +15,7 @@ router.post("/register", async (req, res, next) => {
             const hash = bcrypt.hashSync(credentials.password, rounds)
             credentials.password = hash 
             const user = await Users.add(credentials)
-            res.status(201).json({message: `Congratulations ${user.username} on Registering`, user: user.username})
+            res.status(201).json({message: `Congratulations ${user.username} on Registering`, user})
             console.log('USER REGISTERED:', credentials)
         } else {
             next({ apiCode: 400, apiMessage: 'Username or Password missing'})
@@ -54,12 +56,10 @@ function generateToken(user) {
         subject: user.id,
         username: user.username
     }
-
-    const secret = process.env.JST_SECRET || "May the force be with you"
     const options = {
         expiresIn: "1d"
     }
-    const token = jwt.sign(payload, secret, options)
+    const token = jwt.sign(payload, jwtSecret, options)
     return token
 }
 

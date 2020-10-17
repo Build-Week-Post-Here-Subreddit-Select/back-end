@@ -1,9 +1,11 @@
 const router = require("express").Router()
 const Posts = require('./post-model')
 
+const Restricted = require("../auth/restricted-middleware")
+
 //Get the list of Posts
 
-router.get('/', (req, res) => {
+router.get('/', Restricted, (req, res) => {
     Posts.getPosts()
     .then(post => {
         res.status(200).json({post, message: "Success in retreiving all of the posts"})
@@ -15,7 +17,7 @@ router.get('/', (req, res) => {
 
 // Get a specific post with an ID
 
-router.get('/:id', (req, res) => {
+router.get('/:id', Restricted, (req, res) => {
     const {id} = req.params
 
     Posts.findById(id)
@@ -33,7 +35,7 @@ router.get('/:id', (req, res) => {
 
 // Create a post
 
-router.post("/", (req, res) => {
+router.post("/", Restricted, (req, res) => {
     Posts.addPosts(req.body)
     .then(newPost => {
         res.status(201).json({message:"Congrats on creating a new post", newPost})
@@ -45,7 +47,7 @@ router.post("/", (req, res) => {
 
 // Update post
 
-router.put('/:id', (req, res) => {
+router.put('/:id', Restricted, (req, res) => {
     const { id} = req.params
     const changes = req.body
     Posts.findById(id)
@@ -66,7 +68,7 @@ router.put('/:id', (req, res) => {
 
 // Delete post
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", Restricted, (req, res) => {
     const { id} = req.params 
     Posts.remove(id)
     .then(deleted => {
