@@ -42,7 +42,7 @@ router.post('/:id/posts', Restricted, (req, res) => {
 
 // Update a user's post
 
-router.put('/:id/posts/', Restricted, (req, res) => {
+router.put('/:id/posts/:id', Restricted, (req, res) => {
     const {id} = req.params
     const changes = req.body
     Posts.getPostsList(id)
