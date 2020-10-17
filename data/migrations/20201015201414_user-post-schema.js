@@ -17,7 +17,7 @@ exports.up = function(knex) {
   })
   .createTable('predictions', tbl => {
       tbl.increments()
-      tbl.integer('user_id').unsigned().references('users.id').onDelete('RESTRICT').onUpdate('CASCADE')
+      tbl.integer('user_id').unsigned().references('users-accounts.id').onDelete('RESTRICT').onUpdate('CASCADE')
       tbl.integer('post_id').unsigned().references('posts.id').onDelete('RESTRICT').onUpdate('CASCADE')
       tbl.text('prediction')
   })
@@ -26,5 +26,5 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return knex.dropTableIfExists('predictions')
   .dropTableIfExists('posts')
-  .dropTableIfExists('users')
+  .dropTableIfExists('users-accounts')
 };
