@@ -10,7 +10,7 @@ router.get("/", Restricted, (req, res) => {
         res.status(200).json({message:"Success",user})
     })
     .catch(err => {
-        res.status(404).json({message:"Error with request", err})
+        res.status(404).json({message:"Error with request", error: err.message})
     })
 })
 
@@ -23,7 +23,7 @@ router.get('/:id/posts/', Restricted, (req, res) => {
         res.status(200).json({message: 'Success in retrieving your posts', postLists})
     })
     .catch(err => {
-        res.status(500).json({message: err.message})
+        res.status(500).json({error: err.message})
     })
 })
 
@@ -57,7 +57,7 @@ router.put('/:id/posts/:id', Restricted, (req, res) => {
         }
     })
     .catch(err => {
-        res.status(500).json({message: err.message})
+        res.status(500).json({error: err.message})
     })
 })
 

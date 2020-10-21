@@ -11,7 +11,7 @@ router.get('/', Restricted, (req, res) => {
         res.status(200).json({message: "Success in retreiving all of the posts", post})
     })
     .catch(err => {
-        res.status(500).json({message: 'Error in retreiving your posts', err})
+        res.status(500).json({message: 'Error in retreiving your posts', error: err.message})
     })
 })
 
@@ -29,7 +29,7 @@ router.get('/:id', Restricted, (req, res) => {
         }
     })
     .catch(err => {
-        res.status(500).json({message: "Error with the database", err})
+        res.status(500).json({message: "Error with the database", Error: err.message})
     })
 })
 
@@ -41,7 +41,7 @@ router.post("/", Restricted, (req, res) => {
         res.status(201).json({message:"Congrats on creating a new post", newPost})
     })
     .catch(err => {
-        res.status(500).json({message:"There was a problem with creating a post", err})
+        res.status(500).json({message:"There was a problem with creating a post", error: err.message})
     })
 })
 
@@ -79,7 +79,7 @@ router.delete("/:id", Restricted, (req, res) => {
         }
     })
     .catch(err => {
-        res.status(500).json({message:"There was an error with our backend", err})
+        res.status(500).json({message:"There was an error with our backend", error: err.message})
     })
 })
 
