@@ -8,7 +8,7 @@ const Restricted = require("../auth/restricted-middleware")
 router.get('/', Restricted, (req, res) => {
     Posts.getPosts()
     .then(post => {
-        res.status(200).json({post, message: "Success in retreiving all of the posts"})
+        res.status(200).json({message: "Success in retreiving all of the posts", post})
     })
     .catch(err => {
         res.status(500).json({message: 'Error in retreiving your posts', err})
