@@ -44,7 +44,7 @@ router.post("/login", (req, res) => {
             }
         })
         .catch(error => {
-            res.status(500).json({message: error.message})
+            res.status(500).json({error: error.message})
         })
     } else {
         res.status(404).json({message: "Please provide username and password"})
