@@ -10,6 +10,7 @@ const {jwtSecret} = require("../config/secrets")
 router.post("/register", async (req, res, next) => {
     const credentials = req.body
     console.log('USERS CREDENTIALS:',credentials)
+    try {
         if (isValid(credentials)) {
             const rounds = process.env.BCRYPT_ROUNDS ? parseInt(process.env.BCRYPT_ROUNDS) : 8
             const hash = bcrypt.hashSync(credentials.password, rounds)
@@ -20,6 +21,10 @@ router.post("/register", async (req, res, next) => {
         } else {
             next({ apiCode: 400, apiMessage: 'Username or Password missing'})
         }
+    } catch {
+        next()
+    }
+        
     // } catch (err) {
     //     next({apiCode: 500, apiMessage: "Error saving new user", ...err})
     // }
