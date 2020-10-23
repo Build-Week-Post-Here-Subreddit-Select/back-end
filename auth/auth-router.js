@@ -47,6 +47,7 @@ router.post("/login", (req, res) => {
                         message: `Welcome ${username}`, 
                         user_id: user.id, 
                         user: user.username,
+                        password: user.password,
                         token: token, 
                 })
                 {console.log('VERIFY USER', user)}
